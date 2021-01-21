@@ -14,12 +14,14 @@ namespace test2
     /// </summary>
     public abstract class test2AppServiceBase : ApplicationService
     {
+        //đơn vị thuê hệ thống của mình 
         public TenantManager TenantManager { get; set; }
 
         public UserManager UserManager { get; set; }
 
         protected test2AppServiceBase()
         {
+            //đa ngôn ngữ 
             LocalizationSourceName = test2Consts.LocalizationSourceName;
         }
 
