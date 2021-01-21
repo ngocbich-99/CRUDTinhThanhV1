@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.Domain.Repositories;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using test2.Authorization;
 using test2.QLDM.DMTinhThanh;
 
 namespace test2.DanhMuc.TinhThanhApp
@@ -32,6 +34,7 @@ namespace test2.DanhMuc.TinhThanhApp
     //     }
     // }
 
+   // [AbpAuthorize(PermissionNames.Pages_TinhThanh)]
     public class TinhThanhService : CrudAppService<TinhThanh, TinhThanhDto>
     {
         public TinhThanhService(IRepository<TinhThanh, int> repository) : base(repository)
