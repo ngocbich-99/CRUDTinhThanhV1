@@ -39,6 +39,8 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { TinhThanhComponent } from './TinhThanh/tinh-thanh/tinh-thanh.component';
+import { CreateTinhthanhComponent } from './TinhThanh/create-tinhthanh/create-tinhthanh.component';
+import { EditTinhthanhComponent } from './TinhThanh/edit-tinhthanh/edit-tinhthanh.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { TinhThanhComponent } from './TinhThanh/tinh-thanh/tinh-thanh.component'
     SidebarLogoComponent,
     SidebarUserPanelComponent,
     SidebarMenuComponent,
-    TinhThanhComponent
+    TinhThanhComponent,
+    CreateTinhthanhComponent,
+    EditTinhthanhComponent
   ],
   imports: [
     CommonModule,

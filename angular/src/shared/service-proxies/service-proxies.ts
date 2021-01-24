@@ -1035,79 +1035,10 @@ export class TinhThanhServiceServiceProxy {
     }
 
     /**
-     * @param id (optional) 
      * @return Success
      */
-    get(id: number | undefined): Observable<TinhThanhDto> {
-        let url_ = this.baseUrl + "/api/services/app/TinhThanhService/Get?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGet(<any>response_);
-                } catch (e) {
-                    return <Observable<TinhThanhDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<TinhThanhDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGet(response: HttpResponseBase): Observable<TinhThanhDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = TinhThanhDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<TinhThanhDto>(<any>null);
-    }
-
-    /**
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(sorting: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<TinhThanhDtoPagedResultDto> {
-        let url_ = this.baseUrl + "/api/services/app/TinhThanhService/GetAll?";
-        if (sorting !== undefined && sorting !== null)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+    getAll(): Observable<TinhThanhDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/TinhThanhService/GetAll";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1158,7 +1089,7 @@ export class TinhThanhServiceServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    create(body: TinhThanhDto | undefined): Observable<TinhThanhDto> {
+    create(body: CreateTinhThanhDto | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/TinhThanhService/Create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1170,7 +1101,6 @@ export class TinhThanhServiceServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
             })
         };
 
@@ -1181,14 +1111,14 @@ export class TinhThanhServiceServiceProxy {
                 try {
                     return this.processCreate(<any>response_);
                 } catch (e) {
-                    return <Observable<TinhThanhDto>><any>_observableThrow(e);
+                    return <Observable<void>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<TinhThanhDto>><any>_observableThrow(response_);
+                return <Observable<void>><any>_observableThrow(response_);
         }));
     }
 
-    protected processCreate(response: HttpResponseBase): Observable<TinhThanhDto> {
+    protected processCreate(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1197,73 +1127,14 @@ export class TinhThanhServiceServiceProxy {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = TinhThanhDto.fromJS(resultData200);
-            return _observableOf(result200);
+            return _observableOf<void>(<any>null);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<TinhThanhDto>(<any>null);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    update(body: TinhThanhDto | undefined): Observable<TinhThanhDto> {
-        let url_ = this.baseUrl + "/api/services/app/TinhThanhService/Update";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUpdate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processUpdate(<any>response_);
-                } catch (e) {
-                    return <Observable<TinhThanhDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<TinhThanhDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processUpdate(response: HttpResponseBase): Observable<TinhThanhDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = TinhThanhDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<TinhThanhDto>(<any>null);
+        return _observableOf<void>(<any>null);
     }
 
     /**
@@ -3348,6 +3219,57 @@ export class TinhThanhDtoPagedResultDto implements ITinhThanhDtoPagedResultDto {
 export interface ITinhThanhDtoPagedResultDto {
     totalCount: number;
     items: TinhThanhDto[] | undefined;
+}
+
+export class CreateTinhThanhDto implements ICreateTinhThanhDto {
+    ma: string | undefined;
+    ten: string | undefined;
+    ghiChu: string | undefined;
+
+    constructor(data?: ICreateTinhThanhDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.ma = _data["ma"];
+            this.ten = _data["ten"];
+            this.ghiChu = _data["ghiChu"];
+        }
+    }
+
+    static fromJS(data: any): CreateTinhThanhDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateTinhThanhDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["ma"] = this.ma;
+        data["ten"] = this.ten;
+        data["ghiChu"] = this.ghiChu;
+        return data; 
+    }
+
+    clone(): CreateTinhThanhDto {
+        const json = this.toJSON();
+        let result = new CreateTinhThanhDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateTinhThanhDto {
+    ma: string | undefined;
+    ten: string | undefined;
+    ghiChu: string | undefined;
 }
 
 export class AuthenticateModel implements IAuthenticateModel {

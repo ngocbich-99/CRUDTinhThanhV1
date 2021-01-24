@@ -12,33 +12,50 @@ using test2.QLDM.DMTinhThanh;
 namespace test2.DanhMuc.TinhThanhApp
 {
     
-    // public class TinhThanhService : test2AppServiceBase , ITinhThanhService
-    // {
-    //     private readonly IRepository<TinhThanh> _tinhThanhRepository;
-    //
-    //     public TinhThanhService(IRepository<TinhThanh> tinhThanhRepository)
-    //     {
-    //         _tinhThanhRepository = tinhThanhRepository;
-    //     }
-    //
-    //     public async Task<ListResultDto<TinhThanhDto>> GetAll(TinhThanhDto dto)
-    //     {
-    //         //query viet theo linq, or lampda
-    //         var tinhThanhs = await _tinhThanhRepository
-    //             .GetAll()
-    //             .ToListAsync();
-    //         //lấy tất cả dữ liệu từ db
-    //         
-    //         return new ListResultDto<TinhThanhDto>(
-    //             ObjectMapper.Map<List<TinhThanhDto>>(tinhThanhs));
-    //     }
-    // }
-
-   // [AbpAuthorize(PermissionNames.Pages_TinhThanh)]
-    public class TinhThanhService : CrudAppService<TinhThanh, TinhThanhDto>
+    public class TinhThanhService : test2AppServiceBase , ITinhThanhService
     {
-        public TinhThanhService(IRepository<TinhThanh, int> repository) : base(repository)
+        private readonly IRepository<TinhThanh> _tinhThanhRepository;
+    
+        public TinhThanhService(IRepository<TinhThanh> tinhThanhRepository)
         {
+            _tinhThanhRepository = tinhThanhRepository;
+        }
+    
+        public async Task<PagedResultDto<TinhThanhDto>> GetAll()
+        {
+            //query viet theo linq, or lampda
+            var tinhThanhs = await _tinhThanhRepository
+                .GetAll()
+                .ToListAsync();
+            //lấy tất cả dữ liệu từ db
+            var kq = new PagedResultDto<TinhThanhDto>();
+            kq.TotalCount = tinhThanhs.Count;
+            kq.Items = ObjectMapper.Map<List<TinhThanhDto>>(tinhThanhs);
+            return kq;
+        }
+        
+        public async Task Create(CreateTinhThanhDto input)
+        {
+
+            var tinhThanh = ObjectMapper.Map<TinhThanh>(input);
+
+            await _tinhThanhRepository.InsertAsync(tinhThanh);
+            
+        }
+
+        public async Task DeleteAsync(EntityDto<int> input)
+        {
+            var tinhThanh = await _tinhThanhRepository.FirstOrDefaultAsync(input.Id);
+            await _tinhThanhRepository.DeleteAsync(tinhThanh);
+
         }
     }
+
+   // [AbpAuthorize(PermissionNames.Pages_TinhThanh)]
+    // public class TinhThanhService : CrudAppService<TinhThanh, TinhThanhDto>
+    // {
+    //     public TinhThanhService(IRepository<TinhThanh, int> repository) : base(repository)
+    //     {
+    //     }
+    // }
 }

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
-    <text name="TinhThanh" value="TinhThanh" />
-    <text name="HomePage" value="Home page" />
-    <text name="About" value="About" />
+    <text name="TinhThanh" value="Tỉnh Thành" />
+    <text name="HomePage" value="Trang chủ" />
+    <text name="About" value="Về chúng tôi" />
     <text name="WelcomeMessage" value="Welcome to test2!" />
     <text name="FormIsNotValidMessage" value="Form is not valid. Please check and fix errors." />
     <text name="TenantNameCanNotBeEmpty" value="Tenant name can not be empty" />
@@ -92,7 +92,7 @@
     <text name="On">On</text>
     <text name="Off">Off</text>
     <text name="AreYouSureWantToDelete">Are you sure want to delete {0}?</text>
-    <text name="SuccessfullyDeleted">Successfully deleted</text>
+    <text name="SuccessfullyDeleted">Xoá thành công</text>g
     <text name="StartTyping">Start Typing</text>
     <text name="Skins">Skins</text>
     <text name="Settings">Settings</text>
@@ -103,7 +103,7 @@
     <text name="PasswordsDoNotMatch">Passwords do not match</text>
     <text name="PasswordsMustBeAtLeast8CharactersContainLowercaseUppercaseNumber">Passwords must be at least 8 characters, contain a lowercase, uppercase, and number</text>
     <text name="UserDeleteWarningMessage">User {0} will be deleted.</text>
-    <text name="RoleDeleteWarningMessage">Role {0} will be deleted and unassigned from all assigned users.</text>
+    <text name="RoleDeleteWarningMessage">Tỉnh thành {0} sẽ bị xoá and unassigned from all assigned users.</text>
     <text name="TenantDeleteWarningMessage">Tenant {0} will be deleted.</text>
     <text name="SearchWithThreeDot">Search...</text>
     <text name="PleaseEnterAtLeastNCharacter">Please enter at least {0} characters</text>

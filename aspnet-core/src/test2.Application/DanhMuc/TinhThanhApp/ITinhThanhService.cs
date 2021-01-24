@@ -7,6 +7,8 @@ namespace test2.DanhMuc.TinhThanhApp
 {
     public interface ITinhThanhService: IApplicationService
     {
-        Task<ListResultDto<TinhThanhDto>> GetAll(TinhThanhDto dto);
+        Task<PagedResultDto<TinhThanhDto>> GetAll();
+        Task Create(CreateTinhThanhDto input);
+        Task DeleteAsync(EntityDto<int> input);
     }
 }

@@ -3,10 +3,10 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-6">
-            <h1>{{ "Tinh Thanh" | localize }}</h1>
+            <h1>{{ "TinhThanh" | localize }}</h1>
           </div>
           <div class="col-6 text-right">
-            <a href="javascript:;" class="btn bg-blue">
+            <a href="javascript:;" class="btn bg-blue" (click)="createTinhThanh()">
               <i class="fa fa-plus-square"></i>
               {{ "Create" | localize }}
             </a>
@@ -42,6 +42,7 @@
             <table class="table table-hover text-nowrap" [busy]="isTableLoading">
               <thead class="bg-light">
                 <tr>
+                  <th>{{ "Id" | localize }}</th>
                   <th>{{ "Ma Tinh" | localize }}</th>
                   <th>{{ "Ten tinh" | localize }}</th>
                   <th>{{ "Ghi chu" | localize }}</th>
@@ -61,6 +62,7 @@
                           }
                   "
                 >
+                  <td>{{ tt.id }}</td>
                   <td>{{ tt.ma }}</td>
                   <td>{{ tt.ten }}</td>
                   <td>{{ tt.ghiChu }}</td>
@@ -77,7 +79,7 @@
                     <button
                       type="button"
                       class="btn btn-sm bg-danger mx-2"
-                      
+                      (click)="delete(tt)"
                     >
                       <i class="fas fa-trash"></i>
                       {{ "Delete" | localize }}

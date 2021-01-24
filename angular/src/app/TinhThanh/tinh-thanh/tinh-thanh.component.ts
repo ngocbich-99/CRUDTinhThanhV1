@@ -11,6 +11,7 @@ import {
   TinhThanhDto,
   TinhThanhDtoPagedResultDto
 } from '@shared/service-proxies/service-proxies';
+import { CreateTinhthanhComponent } from '../create-tinhthanh/create-tinhthanh.component';
 
 
 class PagedTinhThanhsRequestDto extends PagedRequestDto {
@@ -26,7 +27,6 @@ export class TinhThanhComponent extends PagedListingComponentBase<TinhThanhDto> 
   keyword = '';
 
   
-
   constructor(
     injector: Injector,
     private _tinhThanhService: TinhThanhServiceServiceProxy,
@@ -43,7 +43,7 @@ export class TinhThanhComponent extends PagedListingComponentBase<TinhThanhDto> 
     request.keyword = this.keyword;
 
     this._tinhThanhService
-      .getAll(request.keyword, request.skipCount, request.maxResultCount)
+      .getAll()
       .pipe(
         finalize(() => {
           finishedCallback();
@@ -57,61 +57,59 @@ export class TinhThanhComponent extends PagedListingComponentBase<TinhThanhDto> 
 
   }
 
-  delete(): void{
 
+  delete(tinhthanh: TinhThanhDto): void {
+    abp.message.confirm(
+      this.l('RoleDeleteWarningMessage', tinhthanh.ten),
+      undefined,
+      (result: boolean) => {
+        if (result) {
+          this._tinhThanhService
+            .delete(tinhthanh.id)
+            .pipe(
+              finalize(() => {
+                abp.notify.success(this.l('SuccessfullyDeleted'));
+                this.refresh();
+              })
+            )
+            .subscribe(() => {});
+        }
+      }
+    );
   }
 
-  // delete(role: RoleDto): void {
-  //   abp.message.confirm(
-  //     this.l('RoleDeleteWarningMessage', role.displayName),
-  //     undefined,
-  //     (result: boolean) => {
-  //       if (result) {
-  //         this._rolesService
-  //           .delete(role.id)
-  //           .pipe(
-  //             finalize(() => {
-  //               abp.notify.success(this.l('SuccessfullyDeleted'));
-  //               this.refresh();
-  //             })
-  //           )
-  //           .subscribe(() => {});
-  //       }
-  //     }
-  //   );
-  // }
-
-  // createRole(): void {
-  //   this.showCreateOrEditRoleDialog();
-  // }
+  createTinhThanh(): void {
+    this.showCreateOrEditTinhThanhDialog();
+  }
 
   // editRole(role: RoleDto): void {
   //   this.showCreateOrEditRoleDialog(role.id);
   // }
 
-  // showCreateOrEditRoleDialog(id?: number): void {
-  //   let createOrEditRoleDialog: BsModalRef;
-  //   if (!id) {
-  //     createOrEditRoleDialog = this._modalService.show(
-  //       CreateRoleDialogComponent,
-  //       {
-  //         class: 'modal-lg',
-  //       }
-  //     );
-  //   } else {
-  //     createOrEditRoleDialog = this._modalService.show(
-  //       EditRoleDialogComponent,
-  //       {
-  //         class: 'modal-lg',
-  //         initialState: {
-  //           id: id,
-  //         },
-  //       }
-  //     );
-  //   }
+  showCreateOrEditTinhThanhDialog(id?: number): void {
+    let createOrEditRoleDialog: BsModalRef;
+    if (!id) {
+      createOrEditRoleDialog = this._modalService.show(
+        CreateTinhthanhComponent,
+        {
+          class: 'modal-lg',
+        }
+      );
+    }
+    // } else {
+    //   createOrEditRoleDialog = this._modalService.show(
+    //     EditRoleDialogComponent,
+    //     {
+    //       class: 'modal-lg',
+    //       initialState: {
+    //         id: id,
+    //       },
+    //     }
+    //   );
+    // }
 
-  //   createOrEditRoleDialog.content.onSave.subscribe(() => {
-  //     this.refresh();
-  //   });
-  // }
+    createOrEditRoleDialog.content.onSave.subscribe(() => {
+      this.refresh();
+    });
+  }
 }

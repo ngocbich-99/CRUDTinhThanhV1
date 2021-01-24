@@ -1,0 +1,75 @@
+<form
+  class="form-horizontal"
+  autocomplete="off"
+  #createTinhThanhForm="ngForm"
+  (ngSubmit)="save()"
+>
+  <abp-modal-header
+    [title]="'CreateNewTinhThanh' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+  <div class="modal-body">
+    <tabset>
+      <tab [heading]="'Details' | localize" class="pt-3 px-2">
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="name">
+            {{ "Mã tỉnh" | localize }}
+          </label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              class="form-control"
+              name="matinh"
+              id="matinh"
+              required
+              minlength="2"
+              maxlength="32"
+              [(ngModel)]="tinhthanh.ma"
+              #nameModel="ngModel"
+              #nameEl
+            />
+          </div>
+        </div>
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="displayName">
+            {{ "Tên Tỉnh" | localize }}
+          </label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              class="form-control"
+              name="tentinh"
+              id="tentinh"
+              required
+              minlength="2"
+              maxlength="32"
+              [(ngModel)]="tinhthanh.ten"
+              #displayNameModel="ngModel"
+              #displayNameEl
+            />
+          </div>
+        </div>
+        <div class="form-group row mb-0">
+          <label class="col-md-3 col-form-label" for="description">
+            {{ "Ghi chú" | localize }}
+          </label>
+          <div class="col-md-9">
+            <textarea
+              type="text"
+              class="form-control"
+              name="ghichu"
+              id="ghichu"
+              [(ngModel)]="tinhthanh.ghiChu"
+            >
+            </textarea>
+          </div>
+        </div>
+      </tab>
+    </tabset>
+  </div>
+  <abp-modal-footer
+    [cancelDisabled]="saving"
+    [saveDisabled]="!createTinhThanhForm.form.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"
+  ></abp-modal-footer>
+</form>
