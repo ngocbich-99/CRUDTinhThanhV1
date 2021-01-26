@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using Abp.Domain.Entities;
@@ -10,8 +11,10 @@ namespace test2.QLDM.DMTinhThanh
     public class TinhThanh: Entity<int>
     
     {
-    public string Ma { get; set; }
-    public string Ten { get; set; }
-    public string GhiChu { get; set; }
+        [Required]
+        public string Ma { get; set; } 
+        [Required]
+        public string Ten { get; set; } 
+        public string GhiChu { get; set; }
     }
 }

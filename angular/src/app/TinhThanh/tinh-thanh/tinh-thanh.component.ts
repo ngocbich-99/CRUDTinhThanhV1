@@ -12,6 +12,7 @@ import {
   TinhThanhDtoPagedResultDto
 } from '@shared/service-proxies/service-proxies';
 import { CreateTinhthanhComponent } from '../create-tinhthanh/create-tinhthanh.component';
+import { EditTinhthanhComponent } from '../edit-tinhthanh/edit-tinhthanh.component';
 
 
 class PagedTinhThanhsRequestDto extends PagedRequestDto {
@@ -51,7 +52,7 @@ export class TinhThanhComponent extends PagedListingComponentBase<TinhThanhDto> 
       )
       .subscribe((result: TinhThanhDtoPagedResultDto) => {
         this.tinhThanhs = result.items;
-        console.log(this.tinhThanhs);
+        // console.log(result);
         this.showPaging(result, pageNumber);
       });
 
@@ -82,9 +83,9 @@ export class TinhThanhComponent extends PagedListingComponentBase<TinhThanhDto> 
     this.showCreateOrEditTinhThanhDialog();
   }
 
-  // editRole(role: RoleDto): void {
-  //   this.showCreateOrEditRoleDialog(role.id);
-  // }
+  editTT(tt: TinhThanhDto): void {
+    this.showCreateOrEditTinhThanhDialog(tt.id);
+  }
 
   showCreateOrEditTinhThanhDialog(id?: number): void {
     let createOrEditRoleDialog: BsModalRef;
@@ -96,17 +97,17 @@ export class TinhThanhComponent extends PagedListingComponentBase<TinhThanhDto> 
         }
       );
     }
-    // } else {
-    //   createOrEditRoleDialog = this._modalService.show(
-    //     EditRoleDialogComponent,
-    //     {
-    //       class: 'modal-lg',
-    //       initialState: {
-    //         id: id,
-    //       },
-    //     }
-    //   );
-    // }
+    else {
+      createOrEditRoleDialog = this._modalService.show(
+        EditTinhthanhComponent,
+        {
+          class: 'modal-lg',
+          initialState: {
+            id: id,
+          },
+        }
+      );
+    }
 
     createOrEditRoleDialog.content.onSave.subscribe(() => {
       this.refresh();

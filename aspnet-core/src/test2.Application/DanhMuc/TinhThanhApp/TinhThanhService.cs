@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
 using Abp.Domain.Repositories;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using test2.Authorization;
 using test2.QLDM.DMTinhThanh;
@@ -36,18 +38,39 @@ namespace test2.DanhMuc.TinhThanhApp
         
         public async Task Create(CreateTinhThanhDto input)
         {
-
             var tinhThanh = ObjectMapper.Map<TinhThanh>(input);
-
             await _tinhThanhRepository.InsertAsync(tinhThanh);
+        }
+        
+        public async Task UpdateAsync(EditTTDto input)
+        {
             
+            var tinhThanh = await _tinhThanhRepository.GetAsync(input.Id);
+
+            ObjectMapper.Map(input, tinhThanh);
+
+            await _tinhThanhRepository.UpdateAsync(tinhThanh);
+            
+        }
+        
+        public async Task<GetTinhThanhForEditOutput> GetTTForEdit(EntityDto input)
+        {
+            var tinhThanh = await _tinhThanhRepository.GetAsync(input.Id);
+            //map tinhthanh cho editTTDto
+            var ttEditDto = ObjectMapper.Map<EditTTDto>(tinhThanh);
+
+            return new GetTinhThanhForEditOutput   
+            {
+                Ma = ttEditDto.Ma,
+                Ten = ttEditDto.Ten,
+                GhiChu = ttEditDto.GhiChu,
+            };
         }
 
         public async Task DeleteAsync(EntityDto<int> input)
         {
             var tinhThanh = await _tinhThanhRepository.FirstOrDefaultAsync(input.Id);
             await _tinhThanhRepository.DeleteAsync(tinhThanh);
-
         }
     }
 
